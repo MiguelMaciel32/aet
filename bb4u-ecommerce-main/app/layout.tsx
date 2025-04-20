@@ -1,4 +1,4 @@
-import type React from "react"
+import React, { ReactNode } from "react"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -8,16 +8,15 @@ import { CartProvider } from "@/context/cart-context"
 import { WhatsAppButton } from "@/components/whatsapp-button"
 import { AnnouncementBanner } from "@/components/anuncio"
 
-
 const inter = Inter({ subsets: ["latin"] })
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: {
+  children: ReactNode
+}) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
       <body className={inter.className}>
         <CartProvider>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>

@@ -42,7 +42,7 @@ export function AnnouncementBanner() {
 
   return (
     <div
-      className={`fixed top-0 left-0 right-0 z-[60] overflow-hidden bg-rose-400 text-white py-1 text-xs whitespace-nowrap transition-transform duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[60] overflow-hidden bg-pink-500 text-white py-1 text-xs whitespace-nowrap transition-transform duration-300 ${
         isScrolled ? "-translate-y-full" : "translate-y-0"
       }`}
     >
