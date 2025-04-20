@@ -122,14 +122,14 @@ export default function VideoCarousel() {
   }, [isMuted])
 
   return (
-    <div className="w-full mx-auto bg-[#e5989b] overflow-hidden">
+    <div className="w-full mx-auto bg-pink-400 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Layout responsivo com grid para desktop */}
         <div className="md:grid md:grid-cols-12 md:gap-6 md:items-center md:min-h-[500px]">
           {/* Título - Ocupa toda a largura no mobile, apenas 4 colunas no desktop */}
           <div className="md:col-span-4 p-6 md:p-8">
             <h2 className="text-white text-center md:text-left font-bold text-3xl md:text-4xl lg:text-5xl">
-            Experiências Reais. 
+              Experiências Reais.
               <br />
               Resultados Incríveis!
             </h2>
@@ -175,7 +175,7 @@ export default function VideoCarousel() {
                 >
                   <video
                     ref={(el) => {
-                      videoRefs.current[index] = el;
+                      videoRefs.current[index] = el
                     }}
                     src={video.src}
                     className="w-full h-full object-cover"
@@ -194,7 +194,7 @@ export default function VideoCarousel() {
               {/* Botão de som */}
               <button
                 onClick={toggleMute}
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-[#f5a5a8] hover:bg-[#e5989b] text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full flex items-center gap-2 transition-colors text-sm md:text-base"
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-pink-300 hover:bg-pink-400 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full flex items-center gap-2 transition-colors text-sm md:text-base"
               >
                 {isMuted ? <VolumeX size={isMobile ? 16 : 18} /> : <Volume2 size={isMobile ? 16 : 18} />}
                 <span>Clique para {isMuted ? "ouvir" : "silenciar"}</span>
@@ -204,7 +204,7 @@ export default function VideoCarousel() {
             {/* Botões de navegação */}
             <button
               onClick={handlePrev}
-              className="absolute left-0 md:left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-1 md:p-2 ml-1 text-[#e5989b] transition-all"
+              className="absolute left-0 md:left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-1 md:p-2 ml-1 text-pink-500 transition-all"
               aria-label="Vídeo anterior"
             >
               <ChevronLeft size={isMobile ? 20 : 24} />
@@ -212,7 +212,7 @@ export default function VideoCarousel() {
 
             <button
               onClick={handleNext}
-              className="absolute right-0 md:right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-1 md:p-2 mr-1 text-[#e5989b] transition-all"
+              className="absolute right-0 md:right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-1 md:p-2 mr-1 text-pink-500 transition-all"
               aria-label="Próximo vídeo"
             >
               <ChevronRight size={isMobile ? 20 : 24} />

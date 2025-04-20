@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { ShoppingBag } from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { MainNav } from "@/components/main-nav"
@@ -53,12 +52,6 @@ export function SiteHeader() {
           aria-label="Cart"
           onClick={() => router.push("/carrinho")}
         >
-          <ShoppingBag className="h-6 w-6" />
-          {itemCount > 0 && (
-            <span className="absolute top-0 right-0 bg-rose-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-              {itemCount}
-            </span>
-          )}
         </Button>
       </div>
     </header>

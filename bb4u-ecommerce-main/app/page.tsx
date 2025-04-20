@@ -28,6 +28,8 @@ export default function Home() {
 {/* Quality Badges Carousel */}
 <ProductPromo />
 
+<div className="mt-14"></div>
+
 <ProductCarousel2/>
 
 <VideoCarousel />

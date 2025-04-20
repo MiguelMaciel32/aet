@@ -43,7 +43,10 @@ export function FaqSection() {
   return (
     <section className="py-12 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-medium text-rose-400 text-center mb-8">Perguntas Frequentes</h2>
+        <h2 className="text-3xl text-center mb-8">
+          <span className="font-normal">PERGUNTAS </span>
+          <span className="font-bold text-pink-500">FREQUENTES</span>
+        </h2>
 
         <div className="max-w-3xl mx-auto space-y-4">
           <Accordion type="single" collapsible className="w-full">
@@ -51,9 +54,9 @@ export function FaqSection() {
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="bg-white rounded-lg overflow-hidden border border-rose-200 mb-4"
+                className="bg-white rounded-lg overflow-hidden border border-pink-200 mb-4"
               >
-                <AccordionTrigger className="px-6 py-4 text-left font-medium hover:no-underline hover:bg-rose-50">
+                <AccordionTrigger className="px-6 py-4 text-left font-medium hover:no-underline hover:bg-pink-50">
                   {item.question}
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-4 pt-2 text-gray-700">{item.answer}</AccordionContent>

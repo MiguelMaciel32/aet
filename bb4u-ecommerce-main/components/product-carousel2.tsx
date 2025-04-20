@@ -3,95 +3,13 @@
 import type React from "react"
 
 import { useState, useEffect, useRef } from "react"
-import { ChevronLeft, ChevronRight, ShoppingCart, CreditCard, Heart } from 'lucide-react'
+import { ChevronLeft, ChevronRight, CreditCard, Heart } from "lucide-react"
 import { useCart } from "@/context/cart-context"
 import Image from "next/image"
 import Link from "next/link"
 import { useMobile } from "@/hooks/use-mobile"
 import { Button } from "@/components/ui/button"
-
-const products = [
-  {
-    id: "1",
-    slug: "mascara-de-reconstrucao",
-    name: "SHAMPOO S.O.S",
-    price: 69.9,
-    originalPrice: 129.9,
-    discount: "46% OFF",
-    image: "shampoosos.jpg",
-    rating: 4.5,
-  },
-  {
-    id: "2",
-    slug: "mascara-de-nutricao",
-    name: "ARC-17",
-    price: 69.9,
-    originalPrice: 129.9,
-    discount: "46% OFF",
-    image: "arc17.jpg",
-    rating: 4.5,
-  },
-  {
-    id: "3",
-    slug: "mascara-de-hidratacao",
-    name: "PROGRESSIVA DE CHUVEIRO ELISS",
-    price: 129.9,
-    originalPrice: 169.9,
-    discount: "24% OFF",
-    image: "eliss.jpg",
-    rating: 4.5,
-  },
-  {
-    id: "4",
-    slug: "kit-shampoo-e-condicionador",
-    name: "LEAVE-IN MASK",
-    price: 79.9,
-    originalPrice: 139.9,
-    discount: "43% OFF",
-    image: "leaveinsos.jpg",
-    rating: 4.5,
-  },
-  {
-    id: "5",
-    slug: "kit-reconstrucao-capilar",
-    name: "EXCELLENCE OIL",
-    price: 249.9,
-    originalPrice: 329.9,
-    discount: "24% OFF",
-    image: "oil.jpg",
-    rating: 4.5,
-  },
-  {
-    id: "6",
-    slug: "kit-crescimento-acelerado",
-    name: "MÁSCARA DE REPARAÇÃO INTENSIVA",
-    price: 279.9,
-    originalPrice: 349.9,
-    discount: "20% OFF",
-    image: "mascarareparação.jpg",
-    rating: 4.5,
-  },
-  {
-    id: "7",
-    slug: "kit-antiqueda-completo",
-    name: "HAIR CAPS",
-    price: 319.9,
-    originalPrice: 399.9,
-    discount: "20% OFF",
-    image: "hair.jpg",
-    rating: 4.5,
-  },
-  {
-    id: "8",
-    slug: "kit-brilho-intenso",
-    name: "ARC-17 LEAVE-IN MASK",
-    price: 189.9,
-    originalPrice: 249.9,
-    discount: "24% OFF",
-    image: "arcleavein.jpg",
-    rating: 4.5,
-  },
-]
+import { products } from "./product-carousel"
 
 export function ProductCarousel2() {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -202,22 +120,26 @@ export function ProductCarousel2() {
 
   const handleBuyNow = (product: any, e: React.MouseEvent) => {
     e.preventDefault() // Prevent navigation
-    addItem(product)
-    // Redirecionar para o checkout
-    window.location.href = "/checkout"
+    e.stopPropagation() // Impedir que o evento de clique propague para o Link
+    // Redirecionar diretamente para o checkout específico do produto
+    window.location.href = product.checkout || "/checkout"
   }
 
+  // Modificar a função renderProductCard para passar apenas título, preço e checkout na URL
   const renderProductCard = (product: any) => (
     <div
       key={product.id}
       className="relative group w-full transform transition-transform duration-300 hover:scale-[1.02]"
     >
-      <Link href={`/produto/${product.slug}`} className="block">
+      <Link
+        href={`/produto/${product.slug}?id=${product.id}&title=${encodeURIComponent(product.name)}&price=${product.price}&checkout=${encodeURIComponent(product.checkout || "")}`}
+        className="block"
+      >
         <div className="bg-white rounded-lg overflow-hidden h-[420px] shadow-sm hover:shadow-md transition-shadow duration-300">
           <div className="relative h-[220px] w-full overflow-hidden">
             <div className="absolute inset-0 flex items-center justify-center">
               <Image
-                src={product.image || "/placeholder.svg"}
+                src={product.images[0] || "/placeholder.svg"}
                 alt={product.name}
                 fill
                 sizes="(max-width: 768px) 100vw, 250px"
@@ -226,16 +148,16 @@ export function ProductCarousel2() {
                 priority
               />
             </div>
-            <div className="absolute top-2 right-2 bg-rose-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+            <div className="absolute top-2 right-2 bg-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full">
               {product.discount}
             </div>
-            <button 
+            <button
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
                 // Adicionar à lista de desejos (implementação futura)
               }}
-              className="absolute top-2 left-2 bg-white/80 hover:bg-white text-rose-500 p-1.5 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              className="absolute top-2 left-2 bg-white/80 hover:bg-white text-pink-500 p-1.5 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               aria-label="Adicionar à lista de desejos"
             >
               <Heart className="w-4 h-4" />
@@ -257,7 +179,7 @@ export function ProductCarousel2() {
             </div>
             <h3 className="font-bold text-sm mb-1 line-clamp-2 h-10">{product.name}</h3>
             <div className="flex items-center gap-2 mt-auto">
-              <span className="text-xl font-bold text-rose-500">R$ {product.price.toFixed(2).replace(".", ",")}</span>
+              <span className="text-xl font-bold text-pink-500">R$ {product.price.toFixed(2).replace(".", ",")}</span>
               <span className="text-sm text-gray-500 line-through">
                 R$ {product.originalPrice.toFixed(2).replace(".", ",")}
               </span>
@@ -269,28 +191,13 @@ export function ProductCarousel2() {
             </div>
 
             {/* Botões de ação */}
-            <div className="grid grid-cols-2 gap-2 mt-auto">
+            <div className="mt-auto">
               <Button
                 onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  addItem(product)
-                }}
-                variant="outline"
-                className="border-rose-200 text-rose-500 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center"
-                size="sm"
-              >
-                <ShoppingCart className="w-4 h-4 mr-1" />
-                <span className="text-xs">Carrinho</span>
-              </Button>
-
-              <Button
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
+                  e.stopPropagation() // Apenas impedir a propagação para não acionar o Link
                   handleBuyNow(product, e)
                 }}
-                className="bg-rose-500 hover:bg-rose-600 text-white flex items-center justify-center"
+                className="bg-pink-500 hover:bg-pink-600 text-white flex items-center justify-center w-full"
                 size="sm"
               >
                 <CreditCard className="w-4 h-4 mr-1" />
@@ -426,5 +333,5 @@ export function ProductCarousel2() {
         </div>
       </div>
     </section>
-  )
+  ) 
 }

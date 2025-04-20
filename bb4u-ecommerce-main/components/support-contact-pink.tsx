@@ -44,7 +44,7 @@ export function SupportContactPink({ whatsappNumber = "5511999999999", className
         ))}
       </div>
 
-      <div className="bg-rose-500 p-8 text-white relative z-10">
+      <div className="bg-pink-500 p-8 text-white relative z-10">
         <h2 className="text-3xl font-bold mb-4">Dúvidas? Fale com o suporte</h2>
 
         <p className="text-lg mb-8">
@@ -55,7 +55,7 @@ export function SupportContactPink({ whatsappNumber = "5511999999999", className
           href={whatsappLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 bg-white hover:bg-rose-100 text-rose-500 font-medium py-4 px-6 rounded-full text-lg transition-all duration-300 w-full max-w-md mx-auto"
+          className="flex items-center justify-center gap-2 bg-white hover:bg-pink-100 text-pink-500 font-medium py-4 px-6 rounded-full text-lg transition-all duration-300 w-full max-w-md mx-auto"
         >
           <WhatsApp className="h-6 w-6" />
           Falar com o suporte

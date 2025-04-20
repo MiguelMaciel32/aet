@@ -3,14 +3,15 @@
 import type React from "react"
 
 import { useState, useEffect, useRef } from "react"
-import { ChevronLeft, ChevronRight, ShoppingCart, CreditCard } from "lucide-react"
+import { ChevronLeft, ChevronRight, CreditCard } from "lucide-react"
 import { useCart } from "@/context/cart-context"
 import Image from "next/image"
 import Link from "next/link"
 import { useMobile } from "@/hooks/use-mobile"
 import { Button } from "@/components/ui/button"
 
-const products = [
+// Dados dos produtos - estes dados podem ser movidos para um arquivo separado
+export const products = [
   {
     id: "1",
     slug: "kit-capilar-completo",
@@ -19,7 +20,26 @@ const products = [
     originalPrice: 665.0,
     discount: "25% OFF",
     image: "kitsos.jpg",
+    images: ["kitsos.jpg", "/hair-care-set-side.png", "/overhead-haircare-set.png"],
     rating: 4.5,
+    reviewCount: 127,
+    stock: 15,
+    description:
+      "Nosso kit completo é o aliado perfeito para manter seus cabelos lindos e bem cuidados. Com uma fórmula leve e nutritiva, este kit foi especialmente desenvolvido para todos os tipos de cabelo, proporcionando hidratação profunda e controle do frizz.",
+    benefits: [
+      "Hidratação profunda;",
+      "Controle do frizz;",
+      "Proteção térmica;",
+      "Definição dos cachos;",
+      "Brilho intenso;",
+      "Sem parabenos;",
+      "Sem sulfatos;",
+    ],
+    howToUse:
+      "Aplique o shampoo nos cabelos molhados, massageie e enxágue. Em seguida, aplique o condicionador do meio para as pontas, deixe agir por 3 minutos e enxágue bem. Finalize com o óleo nas pontas para um brilho extra.",
+    ingredients:
+      "Aqua, Cetearyl Alcohol, Cetrimonium Chloride, Behentrimonium Chloride, Glycerin, Panthenol, Hydrolyzed Keratin, Argania Spinosa Kernel Oil, Butyrospermum Parkii Butter, Cocos Nucifera Oil, Parfum, Citric Acid, Benzyl Alcohol, Potassium Sorbate, Sodium Benzoate.",
+    checkout: "https://excelencia-cosmeticos-ltda.pay.yampi.com.br/r/BQXF79WD2H",
   },
   {
     id: "2",
@@ -29,7 +49,24 @@ const products = [
     originalPrice: 369.9,
     discount: "19% OFF",
     image: "shampo-leavin.jpg",
+    images: ["shampo-leavin.jpg", "/nutrition-kit-side.png", "/nutrition-kit-overhead.png"],
     rating: 4.5,
+    reviewCount: 89,
+    stock: 8,
+    description:
+      "Nosso kit de nutrição intensa com cera antifrizz é perfeito para domar os fios rebeldes e controlar o frizz instantaneamente. Formato prático para levar na bolsa e usar a qualquer momento.",
+    benefits: [
+      "Controle imediato do frizz;",
+      "Formato prático;",
+      "Não pesa nos fios;",
+      "Efeito natural;",
+      "Pode ser usado em qualquer tipo de cabelo;",
+    ],
+    howToUse:
+      "Use o shampoo normalmente e após secar os cabelos, aplique o leave-in nas pontas. Para um efeito mais suave, aplique primeiro nas mãos e depois distribua nos fios.",
+    ingredients:
+      "Cera de Abelha, Óleo de Coco, Óleo de Argan, Manteiga de Karité, Vitamina E, Cera de Carnaúba, Óleo de Jojoba, Extrato de Aloe Vera.",
+    checkout: "/checkout/shampoo-leavein",
   },
   {
     id: "3",
@@ -39,7 +76,24 @@ const products = [
     originalPrice: 269.9,
     discount: "26% OFF",
     image: "soseliss.jpg",
+    images: ["soseliss.jpg", "/hydration-kit-side.png", "/hydration-kit-overhead.png"],
     rating: 4.5,
+    reviewCount: 56,
+    stock: 20,
+    description:
+      "A poderosa combinação do Kit S.O.S com a Progressiva Eliss, uma fórmula exclusiva que contém a última tecnologia para tratar você de dentro para fora!",
+    benefits: [
+      "Hidratação intensa;",
+      "Efeito liso duradouro;",
+      "Redução do volume;",
+      "Cabelos mais sedosos e brilhantes;",
+      "Proteção contra danos externos;",
+    ],
+    howToUse:
+      "Aplique o shampoo, enxágue e seque os cabelos. Aplique a progressiva mecha por mecha e deixe agir por 30 minutos. Enxágue e finalize como desejar.",
+    ingredients:
+      "Silício Orgânico, Queratina, Óleos Essenciais, Proteínas da Seda, Colágeno Hidrolisado, Extrato de Bambu.",
+    checkout: "/checkout/sos-eliss",
   },
   {
     id: "4",
@@ -49,7 +103,17 @@ const products = [
     originalPrice: 139.9,
     discount: "43% OFF",
     image: "archair.jpg",
+    images: ["archair.jpg", "/shampoo-kit-side.png", "/shampoo-kit-overhead.png"],
     rating: 4.5,
+    reviewCount: 112,
+    stock: 5,
+    description: "Kit com shampoo e condicionador para todos os tipos de cabelo.",
+    benefits: ["Limpeza suave;", "Hidratação profunda;", "Não contém sulfatos;", "Cabelos mais macios e brilhantes;"],
+    howToUse:
+      "Aplique o shampoo nos cabelos molhados, massageie e enxágue. Em seguida, aplique o condicionador do meio para as pontas, deixe agir por 3 minutos e enxágue bem.",
+    ingredients:
+      "Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Glycerin, Parfum, Panthenol, Hydrolyzed Wheat Protein.",
+    checkout: "/checkout/arc-hair",
   },
   {
     id: "5",
@@ -59,7 +123,23 @@ const products = [
     originalPrice: 329.9,
     discount: "24% OFF",
     image: "arccompleto.jpg",
+    images: ["arccompleto.jpg", "/side-view-reconstruction-kit.png", "/reconstruction-kit-overhead.png"],
     rating: 4.5,
+    reviewCount: 78,
+    stock: 12,
+    description:
+      "Kit completo com todos os produtos essenciais para o tratamento capilar. Ideal para recuperação total dos fios.",
+    benefits: [
+      "Tratamento completo;",
+      "Recuperação de fios danificados;",
+      "Hidratação intensiva;",
+      "Nutrição profunda;",
+      "Controle de frizz;",
+      "Brilho e maciez;",
+    ],
+    howToUse: "Siga as instruções de cada produto na sequência recomendada para melhores resultados.",
+    ingredients: "Veja a composição de cada produto individualmente nas respectivas embalagens.",
+    checkout: "/checkout/arc-completo",
   },
   {
     id: "6",
@@ -69,7 +149,24 @@ const products = [
     originalPrice: 349.9,
     discount: "20% OFF",
     image: "/produto.jpeg",
+    images: ["/produto.jpeg", "/lateral-hair-growth-kit.png", "/hair-growth-top-view.png"],
     rating: 4.5,
+    reviewCount: 65,
+    stock: 10,
+    description:
+      "Kit especialmente formulado para acelerar o crescimento dos cabelos. Contém ingredientes que estimulam os folículos capilares.",
+    benefits: [
+      "Crescimento acelerado;",
+      "Fortalecimento dos fios;",
+      "Prevenção de quebra;",
+      "Estímulo da circulação no couro cabeludo;",
+      "Nutrição profunda;",
+    ],
+    howToUse:
+      "Use o shampoo e condicionador normalmente. Aplique o tônico no couro cabeludo diariamente e massageie por 5 minutos.",
+    ingredients:
+      "Biotina, Cafeína, Extrato de Gengibre, Óleo de Rícino, Pantenol, Vitaminas do Complexo B, Proteínas Hidrolisadas.",
+    checkout: "/checkout/crescimento-acelerado",
   },
   {
     id: "7",
@@ -79,7 +176,24 @@ const products = [
     originalPrice: 399.9,
     discount: "20% OFF",
     image: "/produto.jpeg",
+    images: ["/produto.jpeg", "/anti-hair-loss-kit-side.png", "/overhead-hair-loss-kit.png"],
     rating: 4.5,
+    reviewCount: 94,
+    stock: 7,
+    description:
+      "Kit completo para combater a queda de cabelo. Formulado com ingredientes que fortalecem os fios desde a raiz.",
+    benefits: [
+      "Redução da queda;",
+      "Fortalecimento dos fios;",
+      "Estímulo do crescimento;",
+      "Melhora da circulação no couro cabeludo;",
+      "Nutrição profunda;",
+    ],
+    howToUse:
+      "Use o shampoo e condicionador normalmente. Aplique o sérum no couro cabeludo à noite e massageie por 3 minutos.",
+    ingredients:
+      "Minoxidil, Cafeína, Extrato de Ginseng, Óleo de Argan, Biotina, Zinco, Vitaminas do Complexo B, Proteínas Hidrolisadas.",
+    checkout: "/checkout/antiqueda-completo",
   },
   {
     id: "8",
@@ -89,7 +203,23 @@ const products = [
     originalPrice: 249.9,
     discount: "24% OFF",
     image: "/produto.jpeg",
+    images: ["/produto.jpeg", "/side-view-sparkle.png", "/city-lights-aerial.png"],
     rating: 4.5,
+    reviewCount: 82,
+    stock: 15,
+    description: "Kit desenvolvido para proporcionar brilho intenso aos cabelos. Ideal para cabelos opacos e sem vida.",
+    benefits: [
+      "Brilho intenso;",
+      "Maciez extrema;",
+      "Selamento das cutículas;",
+      "Proteção contra danos externos;",
+      "Efeito espelhado;",
+    ],
+    howToUse:
+      "Use o shampoo e condicionador normalmente. Aplique o sérum de brilho nos cabelos úmidos ou secos para finalizar.",
+    ingredients:
+      "Óleo de Argan, Óleo de Coco, Extrato de Pérola, Proteínas da Seda, Vitamina E, Pantenol, Queratina Hidrolisada.",
+    checkout: "/checkout/brilho-intenso",
   },
 ]
 
@@ -97,7 +227,13 @@ export function ProductCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
   const [direction, setDirection] = useState("next")
-  const isMobile = useMobile()
+  const isMobileInitial = useMobile()
+  const [isMobile, setIsMobile] = useState(isMobileInitial)
+
+  useEffect(() => {
+    setIsMobile(isMobileInitial)
+  }, [isMobileInitial])
+
   const { addItem } = useCart()
   const carouselRef = useRef<HTMLDivElement>(null)
   const [startX, setStartX] = useState(0)
@@ -200,35 +336,25 @@ export function ProductCarousel() {
     }
   }, [isMobile, currentIndex, isDragging, isAnimating])
 
-  const handleAddToCart = (product: any, e: React.MouseEvent) => {
-    e.preventDefault() // Prevent navigation
-    addItem(product)
-  }
-
   const handleBuyNow = (product: any, e: React.MouseEvent) => {
     e.preventDefault() // Prevent navigation
-    addItem(product)
-    // Salvar o produto no localStorage antes de redirecionar
-    localStorage.setItem("selectedProduct", JSON.stringify(product))
-    // Redirecionar para o checkout
-    window.location.href = "/checkout"
+    e.stopPropagation() // Impedir que o evento de clique propague para o Link
+    // Redirecionar diretamente para o checkout específico do produto
+    window.location.href = product.checkout || "/checkout"
   }
 
+  // Modificar a função renderProductCard para passar apenas título, preço e checkout na URL
   const renderProductCard = (product: any) => (
     <div key={product.id} className="relative group w-full max-w-xs mx-auto">
       <Link
-        href={`/produto/${product.slug}`}
+        href={`/produto/${product.slug}?id=${product.id}&title=${encodeURIComponent(product.name)}&price=${product.price}&image=${product.image}&checkout=${encodeURIComponent(product.checkout || "")}`}
         className="block"
-        onClick={() => {
-          // Salvar o produto completo no localStorage
-          localStorage.setItem("selectedProduct", JSON.stringify(product))
-        }}
       >
         <div className="bg-gray-50 rounded-lg overflow-hidden h-[480px] shadow-sm hover:shadow-md transition-shadow duration-300">
           <div className="relative h-[250px] w-full">
             <div className="absolute inset-0 flex items-center justify-center">
               <Image
-                src={product.image || "/placeholder.svg"}
+                src={product.images[0] || "/placeholder.svg"}
                 alt={product.name}
                 fill
                 sizes="(max-width: 768px) 100vw, 250px"
@@ -237,36 +363,24 @@ export function ProductCarousel() {
                 priority
               />
             </div>
-            <div className="absolute top-2 right-2 bg-rose-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+            <div className="absolute top-2 right-2 bg-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full">
               {product.discount}
-            </div>
-            <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <Button
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  addItem(product)
-                }}
-                className="bg-rose-300 hover:bg-rose-400 text-white"
-              >
-                Adicionar ao carrinho
-              </Button>
             </div>
           </div>
           <div className="p-4 h-[230px] flex flex-col">
             <div className="flex mb-2">
               {[1, 2, 3, 4].map((star) => (
                 <svg key={star} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-.181h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588 1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
               ))}
               <svg className="w-5 h-5 text-yellow-400 text-opacity-50" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-.181h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588 1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
             </div>
             <h3 className="font-bold text-sm mb-2 line-clamp-2 h-10">{product.name}</h3>
             <div className="flex items-center gap-2 mt-auto">
-              <span className="text-xl font-bold text-rose-500">R$ {product.price.toFixed(2).replace(".", ",")}</span>
+              <span className="text-xl font-bold text-pink-500">R$ {product.price.toFixed(2).replace(".", ",")}</span>
               <span className="text-sm text-gray-500 line-through">
                 R$ {product.originalPrice.toFixed(2).replace(".", ",")}
               </span>
@@ -277,29 +391,14 @@ export function ProductCarousel() {
               </span>
             </div>
 
-            {/* Botões de ação */}
-            <div className="flex flex-col gap-2 mt-auto">
+            {/* Botão de compra */}
+            <div className="mt-auto">
               <Button
                 onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  addItem(product)
-                }}
-                variant="outline"
-                className="w-full border-rose-200 text-rose-500 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center"
-                size="sm"
-              >
-                <ShoppingCart className="w-4 h-4 mr-2" />
-                Adicionar ao carrinho
-              </Button>
-
-              <Button
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
+                  e.stopPropagation() // Apenas impedir a propagação para não acionar o Link
                   handleBuyNow(product, e)
                 }}
-                className="w-full bg-rose-500 hover:bg-rose-600 text-white flex items-center justify-center"
+                className="w-full bg-pink-500 hover:bg-pink-600 text-white flex items-center justify-center"
                 size="sm"
               >
                 <CreditCard className="w-4 h-4 mr-2" />

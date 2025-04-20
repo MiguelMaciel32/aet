@@ -47,7 +47,7 @@ O ARC 17 é o primeiro reconstrutor capilar em seringa do Brasil, desenvolvido c
         </div>
       </div>
 
-      Ícone do WhatsApp
+      {/* Ícone do WhatsApp */}
       {/* <div className="absolute bottom-4 right-4">
         <div className="bg-green-500 text-white p-3 rounded-full shadow-lg">
           <svg
